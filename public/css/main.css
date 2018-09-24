@@ -30,30 +30,28 @@ header{
 }
 
 .login, .register{
+  position: absolute;
   width: 200px;
-  height: 150px;
-  padding: 20px;
-  margin: 0 0 50px 0;
+  height: 200px;
+  padding: 30px;
+  margin: 0 auto;
   background-color: rgba(0,0,0,0.6);
+  z-index: 1000;
+}
+
+.register{
+  height: 270px;
+}
+
+.h3-login, .h3-register{
+  color: rgb(140,140,140);
+  text-align: center;
 }
 
 form > input{
   border: 1px solid rgb(180,80,80);
   padding: 10px;
   margin: 0 0 10px 0;
-}
-
-.login{
-  margin: 0 auto;
-  display: grid;
-  transform: translateY(-160%);
-}
-
-.register{
-  position: absolute;
-  height: 205px;
-  top: 173px;
-  right: 10px;
 }
 
 .container1, .container2{
@@ -150,10 +148,17 @@ form > input{
 
 @media only screen and (max-width: 600px){
   .wrapper{
-    width: 85%;
-    margin-top: 20px;
+    width: 90%;
+    margin: 20px 0 0 10px;
   }
+
   header{
-    height: 100px;
+    height: 200px;
+    margin: 0;
+    padding: 0;
+  }
+  .user{
+    float: none;
+    margin: 0 auto;
   }
 }
