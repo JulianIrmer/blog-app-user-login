@@ -226,8 +226,8 @@ function logout(){
 }
 
 function editor(){
-  document.querySelector('#title').classList.remove('hidden');
-  document.querySelector('#content').classList.remove('hidden');
+  document.querySelector('#title').classList.remove('hidden2');
+  document.querySelector('#content').classList.remove('hidden2');
   send.style.transform = 'translateY(0px)';
   send.innerHTML = 'Send';
   
