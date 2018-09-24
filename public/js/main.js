@@ -1,29 +1,26 @@
-const form = document.querySelector('form');
+const postForm = document.querySelector('.post-form');
+const loginForm = document.querySelector('.login');
+const registerForm = document.querySelector('.register');
 const postsElement = document.querySelector('.posts');
 const API_GET_ALL = '/api';
 const API_SEND = '/api/send';
 const API_DELETE_ALL = '/api/delete';
 const API_DELETE_ID = '/api/delete/';
-const API_MAXID = '/api/maxid';
-let id;
+const API_LOGIN = '/api/login';
+const API_REGISTER = '/api/register';
 let allData;
+let oneClicked = false;
+let twoClicked = false;
 
-function getMaxID(){
-  fetch(API_MAXID)
-    .then((response) => {
-      id = response;
-      console.log(id);
-    })
-}
-
-form.addEventListener('submit', (event) => {
+//getting the submitted data from the post-form
+postForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const formData = new FormData(form);
+  const formData = new FormData(postForm);
   const title = formData.get('title');
   const content = formData.get('content');
   const time = new Date().toLocaleTimeString();
   const date = new Date().toLocaleDateString();
-  
+  let id;
   
   const data = {
     title,
@@ -32,7 +29,6 @@ form.addEventListener('submit', (event) => {
     time,
     date
   };
-
   //save a post to mongodb
   fetch(API_SEND, {
     method: 'POST',
@@ -40,16 +36,67 @@ form.addEventListener('submit', (event) => {
     headers: {
       'content-type':'application/json'
     }
-  })
-  // id++;
-  window.location.reload()
-  form.reset();
+  });
+  //reload the window and resetting the form 
+  window.location.reload();
+});
+
+//getting login data
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const loginData = new FormData(loginForm);
+  const username = loginData.get('username');
+  const password = loginData.get('password');
+  const time = new Date();
+  
+  const data = {
+    username,
+    password,
+    time
+  };
+
+  // save a post to mongodb
+  fetch(API_LOGIN, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type':'application/json'
+    }
+  });
+  //reload the page
+  window.location.reload();
+});
+
+//getting register data
+registerForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const registerData = new FormData(registerForm);
+  const username = registerData.get('username');
+  const email = registerData.get('email');
+  const password = registerData.get('password');
+  const time = new Date();
+  
+  const data = {
+    username,
+    email,
+    password,
+    time
+  };
+
+  // save a post to mongodb
+  fetch(API_REGISTER, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type':'application/json'
+    }
+  });
+  //reload the page
+  window.location.reload();
 });
 
 //get all posts from mongodb
-// window.onload = getMaxID();
 window.onload = loadAllPosts();
-
 
 function loadAllPosts() {
   postsElement.innerHTML = '';
@@ -112,6 +159,17 @@ function loadAllPosts() {
         postsElement.appendChild(div);
       });
   });
-};
+}
+
+function show(id){
+  if(id == 1){
+      document.getElementById(id).classList.toggle('active');
+      document.querySelector('.login').classList.toggle('hidden');
+  }
+  if(id == 2){
+    document.getElementById(id).classList.toggle('active');
+    document.querySelector('.register').classList.toggle('hidden');
+  }
+}
 
 

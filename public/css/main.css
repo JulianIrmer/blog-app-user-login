@@ -13,19 +13,68 @@ header{
   align-items: center;
 }
 
-h1{
-  display: grid;
+.user{
+  float: right;
+  list-style-type: none;
+}
+
+.hidden{
+  visibility: hidden;
+  opacity: 0.0;
+}
+
+.active{
+  background-color: rgba(0,0,0,0.6);
+  color: rgb(180,80,80);
+}
+
+.user li{
+  float: left;
+  padding: 10px 10px 8px 10px;
+  font-size: 140%;
+  /* border-right: 1px solid rgb(180,80,80); */
+  cursor: pointer;
+}
+
+.user li:hover{
+  color: rgb(180,80,80);
+}
+
+.login, .register{
+  width: 200px;
+  height: 150px;
+  padding: 20px;
+  margin: 0 0 50px 0;
+  background-color: rgba(0,0,0,0.6);
+}
+
+form > input{
+  border: 1px solid rgb(180,80,80);
+  padding: 10px;
+  margin: 0 0 10px 0;
+}
+
+.login{
+  position: absolute;
+  top: 173px;
+  right: 97px;
+}
+
+.register{
+  position: absolute;
+  top: 173px;
+  right: 10px;
 }
 
 .wrapper{
-  width: 50%;
+  width: 45%;
   margin: 50px auto;
   text-align: center;
 }
 
 #title{
   margin: 0 0 10px 0;
-  padding: 9px;
+  padding: 10px;
   width: 100%;
   border: 1px solid rgb(140,140,140);
 }

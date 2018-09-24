@@ -10,14 +10,34 @@
 <body>
   <header>
     <h1>Blog App with NodeJS and mongoDB</h1>
+    <div class='xyz'>
+      <ul class='user'>
+        <li id="1" class="login-li" onclick="show(id)">Login</li>
+        <li id="2" class="register-li" onclick="show(id)">Register</li>
+        <li id="3" class="logout" onclick="logout()">Logout</li>
+      </ul>
+
+      <form class='login hidden'>
+          <input type="text" name="username" id="name-login" placeholder="Usename">
+          <input type="password" name="password" id="pw-login" placeholder="Password">
+          <button type="submit">Login</button>
+        </form>
+
+      <form class='register hidden'>
+        <input type="text" name="username" id="name-register" placeholder="Username">
+        <input type="email" name="email" id="email-register" placeholder="Email">
+        <input type="password" name="password" id="pw-register" placeholder="Password">
+        <button type="submit">Register</button>
+      </form>
+    </div>
   </header>
+
   <div class="wrapper">
-    <form>
+    <form class="post-form">
       <input type="text" id="title" name="title" placeholder="Title...">
       <textarea id="content" name="content" cols="30" rows="10" placeholder="Write something..."></textarea>
       <button id="send-btn">Submit</button>
     </form>
-    <!-- <button id="deleteAll" onclick="deleteAll()">Delete All Posts</button> -->
     <div class="posts"></div>
   </div>
   <script src="./js/main.js"></script>

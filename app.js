@@ -17,7 +17,7 @@ const DB_URL = 'mongodb://Holly:ikou05667@ds123614.mlab.com:23614/hollydb'
 let seqID = 1;
 
 //connect to mongodb
-const db = mongojs(DB_URL, ['posts']);
+const db = mongojs(DB_URL, ['posts', 'users']);
 
 db.on('connect', (err) => {
   if(err){
@@ -127,6 +127,17 @@ server.post('/api/delete/:id', (req, res) => {
       console.log('Delete Post with ID '+postid);
     }
   });
+});
+
+//loging route
+server.post('/api/login', (req, res) => {
+  console.log(req.body);
+});
+
+//register route
+server.post('/api/register', (req, res) => {
+  console.log(req.body);
+  db.users.save(req.body);
 });
 
 //starting the server
