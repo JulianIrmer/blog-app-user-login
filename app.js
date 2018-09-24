@@ -82,7 +82,6 @@ server.get('/api', (req, res) => {
       console.log('database error', err);
     }
     else{
-      console.log(posts);
       if(posts.length < 1){
         res.send('No data');
       }
@@ -105,7 +104,6 @@ server.post('/api/send', (req, res) => {
 server.post('/api/delete', (req, res) => {
   db.postsDev.remove({});
   seqID = 1;
-  console.log('removed all posts');
 });
 
 //delete single post
@@ -115,9 +113,6 @@ server.post('/api/delete/:id', (req, res) => {
   db.postsDev.remove({id: postid}, (err, post) => {
     if(err){
       console.log('database error', err);
-    }
-    else{
-      console.log('Delete Post with ID '+postid);
     }
   });
 });
@@ -152,7 +147,6 @@ server.post('/api/register', (req, res) => {
   //hash the user pw, create a new user object and
   //save it in the db
   else{
-    console.log('No validation error');
     res.json({message: 'success'});
 
     //hash the user pw
