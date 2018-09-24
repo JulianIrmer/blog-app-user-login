@@ -4,6 +4,8 @@ const registerForm = document.querySelector('.register');
 const postsElement = document.querySelector('.posts');
 const header = document.querySelector('header');
 const wrapper = document.querySelector('.wrapper');
+const center = document.querySelector('.center');
+const center2 = document.querySelector('.center2');
 const API_GET_ALL = '/api';
 const API_SEND = '/api/send';
 const API_DELETE_ALL = '/api/delete';
@@ -167,12 +169,12 @@ function show(id){
   if(id == 1){
     document.querySelector('.container1').classList.toggle('hidden');
     loginForm.classList.toggle('hidden');
-    loginForm.style.left = ((window.innerWidth-200)/2)+'px';
+    center.style.zIndex = 3;
   }
   if(id == 2){
     document.querySelector('.container2').classList.toggle('hidden');
     registerForm.classList.toggle('hidden');
-    registerForm.style.left = ((window.innerWidth-200)/2)+'px';
+    center2.style.zIndex = 3;
   }
   header.classList.toggle('blur');
   wrapper.classList.toggle('blur');
@@ -181,11 +183,12 @@ function show(id){
 function hide(id){
   if(id == 'login-layer'){
     loginForm.classList.toggle('hidden');
+    center.style.zIndex = -3;
   }
   if(id == 'register-layer'){
     registerForm.classList.toggle('hidden');
+    center2.style.zIndex = -3;
   }
-
   document.getElementById(id).classList.toggle('hidden');
   header.classList.toggle('blur');
   wrapper.classList.toggle('blur');

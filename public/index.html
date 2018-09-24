@@ -20,28 +20,32 @@
   </header>
 
   <div class="container1 hidden" id='login-layer' onclick="hide(id)"></div>
-  <form class='login hidden'>
-    <h3 class="h3-login">Login</h3>
-    <input type="text" name="username" id="name-login" placeholder="Usename">
-    <input type="password" name="password" id="pw-login" placeholder="Password">
-    <button type="submit">Login</button>
-  </form>
-  
+  <div class="center">
+    <form class='login hidden'>
+      <h3 class="h3-login">Login</h3>
+      <input type="text" name="username" id="name-login" placeholder="Usename">
+      <input type="password" name="password" id="pw-login" placeholder="Password">
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
   <div class="container2 hidden" id='register-layer' onclick="hide(id)"></div>
-  <form class='register hidden'>
-    <h3 class="h3-register">Register</h3>
-    <input type="text" name="username" id="name-register" placeholder="Username">
-    <input type="email" name="email" id="email-register" placeholder="Email">
-    <input type="password" name="password" id="pw-register" placeholder="Password">
-    <input type="password" name="password" id="pw-register-conf" placeholder="Confirm Password">
-    <button type="submit">Register</button>
-  </form>
+  <div class="center2">
+    <form class='register hidden'>
+      <h3 class="h3-register">Register</h3>
+      <input type="text" name="username" id="name-register" placeholder="Username">
+      <input type="email" name="email" id="email-register" placeholder="Email">
+      <input type="password" name="password" id="pw-register" placeholder="Password">
+      <input type="password" name="password" id="pw-register-conf" placeholder="Confirm Password">
+      <button type="submit">Register</button>
+    </form>
+  </div>
 
   <div class="wrapper">
     <form class="post-form">
       <input type="text" id="title" name="title" placeholder="Title...">
       <textarea id="content" name="content" cols="30" rows="10" placeholder="Write something..."></textarea>
-      <button id="send-btn">Submit</button>
+      <button class="send-btn">Submit</button>
     </form>
     <div class="posts"></div>
   </div>

@@ -21,7 +21,6 @@ header{
   float: left;
   padding: 10px 10px 8px 10px;
   font-size: 140%;
-  /* border-right: 1px solid rgb(180,80,80); */
   cursor: pointer;
 }
 
@@ -30,17 +29,20 @@ header{
 }
 
 .login, .register{
-  position: absolute;
+  position: relative;
+  right: 67%;
   width: 200px;
   height: 200px;
   padding: 30px;
   margin: 0 auto;
   background-color: rgba(0,0,0,0.6);
-  z-index: 1000;
+  z-index: 3;
+  display: grid;
 }
 
 .register{
   height: 270px;
+  z-index: 300;
 }
 
 .h3-login, .h3-register{
@@ -48,10 +50,15 @@ header{
   text-align: center;
 }
 
-form > input{
+.login > input, .register > input{
   border: 1px solid rgb(180,80,80);
   padding: 10px;
   margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.register > button, .login > button{
+  width: 100%;
 }
 
 .container1, .container2{
@@ -64,19 +71,21 @@ form > input{
   padding: 0;
   margin: 0;
   background-color: rgba(0,0,0,0.9);
-  z-index: 200;
+  z-index: 3;
 }
 
 .wrapper{
   width: 45%;
   margin: 50px auto;
   text-align: center;
+  z-index: 2;
 }
 
 #title{
   margin: 0 0 10px 0;
   padding: 10px;
   width: 100%;
+  text-align: center;
   border: 1px solid rgb(140,140,140);
 }
 
@@ -86,7 +95,7 @@ form > input{
   border: 1px solid rgb(140,140,140);
 }
 
-#send-btn{
+.send-btn{
   margin: 20px 0 0 0;
   padding: 10px;
   width: 100px;
@@ -140,6 +149,17 @@ form > input{
   color: rgb(180,80,80);
 }
 
+.center, .center2{
+  position: absolute;
+  left: 50%;
+  width: 190px;
+  z-index: -10;
+}
+
+.hidden2{
+  z-index: 3;
+}
+
 @media only screen and (max-width: 800px){
   .wrapper{
     width: 80%;
@@ -150,12 +170,6 @@ form > input{
   .wrapper{
     width: 90%;
     margin: 20px 0 0 10px;
-  }
-
-  header{
-    height: 200px;
-    margin: 0;
-    padding: 0;
   }
   .user{
     float: none;
