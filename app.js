@@ -2,10 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const mongojs = require('mongojs');
 
-const path = require('path');
+// const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
+// const exphbs = require('express-handlebars');
 const expressValidator = require('express-validator');
 const flash = require('flash');
 const session = require('express-session');
@@ -34,6 +34,50 @@ const server = express();
 //middleware
 server.use(express.json());
 server.use(cors());
+server.use(cookieParser());
+
+//express session
+server.use(session({
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: true
+}));
+
+//passport init
+server.use(passport.initialize());
+server.use(passport.session());
+
+//express validator
+server.use(expressValidator({
+  errorFormatter: (param, msg, value) =>{
+    let namespace = param.split('');
+    let root = namespace.shift();
+    let formParam = root;
+
+    while(namespace.length){
+      formParam += '[' +namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg : msg,
+      value : value
+    };
+  }
+}));
+
+// connect flash
+server.use(flash());
+
+// global variables
+server.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
+
+
 
 //load html/css/js from public folder
 server.use(express.static("public"));
@@ -89,4 +133,3 @@ server.post('/api/delete/:id', (req, res) => {
 server.listen(PORT, () => {
   console.log('Server listening on port '+PORT);
 });
-
