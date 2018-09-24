@@ -12,20 +12,9 @@ header{
   display: grid;
   align-items: center;
 }
-
 .user{
   float: right;
   list-style-type: none;
-}
-
-.hidden{
-  visibility: hidden;
-  opacity: 0.0;
-}
-
-.active{
-  background-color: rgba(0,0,0,0.6);
-  color: rgb(180,80,80);
 }
 
 .user li{
@@ -55,15 +44,29 @@ form > input{
 }
 
 .login{
-  position: absolute;
-  top: 173px;
-  right: 97px;
+  margin: 0 auto;
+  display: grid;
+  transform: translateY(-160%);
 }
 
 .register{
   position: absolute;
+  height: 205px;
   top: 173px;
   right: 10px;
+}
+
+.container1, .container2{
+  position: absolute;
+  display: grid;
+  align-items: center;
+  top: 0px;
+  height: 1500px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 200;
 }
 
 .wrapper{
@@ -124,6 +127,19 @@ form > input{
   background-color: rgb(0,0,0,0);
   color: rgb(255,0,0);
   font-weight: bolder;
+}
+
+.hidden{
+  visibility: hidden;
+  opacity: 0.0;
+}
+
+.blur{
+  filter: blur(5px);
+}
+.active{
+  background-color: rgba(0,0,0,0.6);
+  color: rgb(180,80,80);
 }
 
 @media only screen and (max-width: 800px){

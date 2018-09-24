@@ -163,11 +163,9 @@ function loadAllPosts() {
 
 function show(id){
   if(id == 1){
-      document.getElementById(id).classList.toggle('active');
-      document.querySelector('.login').classList.toggle('hidden');
+      document.querySelector('.container1').classList.toggle('hidden');
   }
   if(id == 2){
-    document.getElementById(id).classList.toggle('active');
     document.querySelector('.register').classList.toggle('hidden');
   }
 }
