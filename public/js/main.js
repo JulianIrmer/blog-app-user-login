@@ -102,6 +102,7 @@ registerForm.addEventListener('submit', (event) => {
 //get all posts from mongodb
 window.onload = loadAllPosts();
 
+//create new html elements for every element in the array
 function loadAllPosts() {
   postsElement.innerHTML = '';
   fetch(API_GET_ALL)
