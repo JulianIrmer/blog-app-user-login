@@ -86,7 +86,7 @@ header{
   height: auto;
   padding: 20px;
   font-size: 25px;
-  width: 100%;
+  width: 90%;
   text-align: center;
   margin: 0 auto;
   position: absolute;
@@ -122,11 +122,14 @@ header{
   background-color: rgba(200,200,240, 0.5);
   border: 1px solid rgb(140,140,140);
   cursor: pointer;
+  transform: translateY(-150px);
+  transition: all 750ms ease-in-out;
 }
 
 .post{
   width: 100%;
-  background-color: rgb(230,230,230);
+  background-color: rgba(200,200,240, 0.25);
+  /* background-color: rgba(230,230,230, 0.8); */
   min-height: 110px;
   padding: 10px;
   margin: 30px 0 0 0;
@@ -134,6 +137,7 @@ header{
 
 .post-title{
   padding: 0 0 5px 0;
+  /* border-bottom: 1px solid rgb(0,0,0); */
   border-bottom: 1px solid rgb(180,80,80);
 }
 
@@ -187,12 +191,20 @@ header{
 }
 
 @media only screen and (max-width: 600px){
+  header{
+    height: 100px;
+  }
+  header h1{
+    font-size: 170%;
+    padding: 10px 0 0 0;
+    margin: 0;
+  }
   .wrapper{
     width: 90%;
     margin: 20px 0 0 10px;
   }
   .user{
-    float: none;
+    font-size: 60%;
     margin: 0 auto;
   }
 }

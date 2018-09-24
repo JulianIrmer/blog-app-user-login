@@ -9,7 +9,8 @@
 
 <body>
   <header>
-    <h1>Blog App with NodeJS and mongoDB</h1>
+    <h1>NodeJS Blog App</h1>
+    <!-- <p>powered by nodeJS, mongoDB and expressjs</p> -->
     <div class='xyz'>
       <ul class='user'>
         <li id="1" class="login-li" onclick="show(id)">Login</li>
@@ -43,9 +44,9 @@
   
   <div class="wrapper">
     <form class="post-form">
-      <input type="text" id="title" name="title" placeholder="Title..." required>
-      <textarea id="content" name="content" cols="30" rows="10" placeholder="Write something..." required></textarea>
-      <button class="send-btn">Submit</button>
+      <input class="hidden" type="text" id="title" name="title" placeholder="Title..." required>
+      <textarea class="hidden" id="content" name="content" cols="30" rows="5" placeholder="Write something..." required></textarea>
+      <button class="send-btn" onclick="editor()">Add Post</button>
     </form>
     <div class="posts"></div>
   </div>

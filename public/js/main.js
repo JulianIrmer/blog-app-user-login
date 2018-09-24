@@ -1,3 +1,4 @@
+//HTML ELEMENTS
 const postForm = document.querySelector('.post-form');
 const loginForm = document.querySelector('.login');
 const registerForm = document.querySelector('.register');
@@ -7,15 +8,15 @@ const wrapper = document.querySelector('.wrapper');
 const center = document.querySelector('.center');
 const center2 = document.querySelector('.center2');
 const popup = document.querySelector('.popup');
+const send = document.querySelector('.send-btn');
+
+//API ROUTES
 const API_GET_ALL = '/api';
 const API_SEND = '/api/send';
 const API_DELETE_ALL = '/api/delete';
 const API_DELETE_ID = '/api/delete/';
 const API_LOGIN = '/api/login';
 const API_REGISTER = '/api/register';
-let allData;
-let oneClicked = false;
-let twoClicked = false;
 
 //getting the submitted data from the post-form
 postForm.addEventListener('submit', (event) => {
@@ -34,7 +35,7 @@ postForm.addEventListener('submit', (event) => {
     time,
     date
   };
-  
+
   //save a post to mongodb
   fetch(API_SEND, {
     method: 'POST',
@@ -144,7 +145,7 @@ function loadAllPosts() {
         //add the title
         const title = document.createElement('h2');
         title.textContent = post.title;
-        title.className = 'post-title'
+        title.className = 'post-title';
 
         //add the content
         const content = document.createElement('p');
@@ -222,6 +223,14 @@ function hide(id){
 
 function logout(){
   console.log('byebye');
+}
+
+function editor(){
+  document.querySelector('#title').classList.remove('hidden');
+  document.querySelector('#content').classList.remove('hidden');
+  send.style.transform = 'translateY(0px)';
+  send.innerHTML = 'Send';
+  
 }
 
 

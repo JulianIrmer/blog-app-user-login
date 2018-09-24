@@ -13,7 +13,7 @@ const DB_URL = 'mongodb://Holly:ikou05667@ds123614.mlab.com:23614/hollydb'
 let seqID = 1;
 
 //connect to mongodb
-const db = mongojs(DB_URL, ['posts', 'users']);
+const db = mongojs(DB_URL, ['postsDev', 'users']);
 
 db.on('connect', (err) => {
   if(err){
@@ -77,7 +77,7 @@ server.use(express.static("public"));
 
 //get all posts
 server.get('/api', (req, res) => {
-  db.posts.find((err, posts) => {
+  db.postsDev.find((err, posts) => {
     if(err){
       console.log('database error', err);
     }
@@ -97,13 +97,13 @@ server.get('/api', (req, res) => {
 server.post('/api/send', (req, res) => {
   let data = req.body;
   data.id = seqID;
-  db.posts.save(data);
+  db.postsDev.save(data);
   seqID++;
 });
 
 //delete all posts
 server.post('/api/delete', (req, res) => {
-  db.posts.remove({});
+  db.postsDev.remove({});
   seqID = 1;
   console.log('removed all posts');
 });
@@ -112,7 +112,7 @@ server.post('/api/delete', (req, res) => {
 server.post('/api/delete/:id', (req, res) => {
   let postid = JSON.parse(req.params.id);
   
-  db.posts.remove({id: postid}, (err, post) => {
+  db.postsDev.remove({id: postid}, (err, post) => {
     if(err){
       console.log('database error', err);
     }
@@ -165,7 +165,7 @@ server.post('/api/register', (req, res) => {
       'email' : email,
       'password' : hash
     };
-    
+
     //send the user object to the database
     db.users.save(user);
   }
