@@ -6,6 +6,7 @@ const header = document.querySelector('header');
 const wrapper = document.querySelector('.wrapper');
 const center = document.querySelector('.center');
 const center2 = document.querySelector('.center2');
+const popup = document.querySelector('.popup');
 const API_GET_ALL = '/api';
 const API_SEND = '/api/send';
 const API_DELETE_ALL = '/api/delete';
@@ -33,6 +34,7 @@ postForm.addEventListener('submit', (event) => {
     time,
     date
   };
+  
   //save a post to mongodb
   fetch(API_SEND, {
     method: 'POST',
@@ -78,12 +80,14 @@ registerForm.addEventListener('submit', (event) => {
   const username = registerData.get('username');
   const email = registerData.get('email');
   const password = registerData.get('password');
+  const password2 = registerData.get('password2');
   const time = new Date();
   
   const data = {
     username,
     email,
     password,
+    password2,
     time
   };
 
@@ -94,9 +98,30 @@ registerForm.addEventListener('submit', (event) => {
     headers: {
       'content-type':'application/json'
     }
-  });
-  //reload the page
-  window.location.reload();
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => {
+      //If error, show error
+      if(response.length > 0){
+        // alert(response[0].msg);
+        popup.classList.toggle('hidden');
+        popup.innerHTML = response[0].msg;
+        setTimeout(() => {
+          popup.classList.toggle('hidden');
+        },1500);
+      }
+      //if success, show success-msg and reload
+      else{
+        popup.classList.toggle('hidden');
+        popup.innerHTML = response.message;
+        setTimeout(() => {
+          popup.classList.toggle('hidden');
+          window.location.reload();
+        },1000);
+      }
+    });
 });
 
 //get all posts from mongodb
@@ -193,6 +218,10 @@ function hide(id){
   document.getElementById(id).classList.toggle('hidden');
   header.classList.toggle('blur');
   wrapper.classList.toggle('blur');
+}
+
+function logout(){
+  console.log('byebye');
 }
 
 

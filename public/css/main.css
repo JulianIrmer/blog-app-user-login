@@ -35,9 +35,10 @@ header{
   height: 200px;
   padding: 30px;
   margin: 0 auto;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.2);
   z-index: 3;
   display: grid;
+  opacity: 0.8;
 }
 
 .register{
@@ -59,6 +60,11 @@ header{
 
 .register > button, .login > button{
   width: 100%;
+  border: 0;
+  padding: 10px;
+  background-color: rgba(200,200,240, 1);
+  border: 1px solid rgb(140,140,140);
+  cursor: pointer;
 }
 
 .container1, .container2{
@@ -72,6 +78,20 @@ header{
   margin: 0;
   background-color: rgba(0,0,0,0.9);
   z-index: 3;
+}
+
+.popup{
+  background-color: rgba(200,200,200,0.6);
+  color: black;
+  height: auto;
+  padding: 20px;
+  font-size: 25px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  position: absolute;
+  /* top: 0px; */
+  z-index: 4;
 }
 
 .wrapper{

@@ -1,17 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const mongojs = require('mongojs');
-
-// const path = require('path');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-// const exphbs = require('express-handlebars');
 const expressValidator = require('express-validator');
 const flash = require('flash');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
+const bcrypt = require('bcryptjs');
 const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb://Holly:ikou05667@ds123614.mlab.com:23614/hollydb'
 let seqID = 1;
@@ -76,9 +72,6 @@ server.use((req, res, next) => {
   next();
 });
 
-
-
-
 //load html/css/js from public folder
 server.use(express.static("public"));
 
@@ -129,16 +122,54 @@ server.post('/api/delete/:id', (req, res) => {
   });
 });
 
-//loging route
+//login route
 server.post('/api/login', (req, res) => {
   console.log(req.body);
 });
 
 //register route
 server.post('/api/register', (req, res) => {
-  console.log(req.body);
-  db.users.save(req.body);
-});
+  let name = req.body.username;
+  let email = req.body.email;
+  let password = req.body.password;
+
+  //validation
+  req.checkBody('username', 'Name is required').notEmpty();
+  req.checkBody('email', 'Email is required').notEmpty();
+  req.checkBody('email', 'Must be an email adress').isEmail();
+  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('password2', 'Password mismatch').equals(password);
+
+  let errors = req.validationErrors();
+
+  //check for errors. if there is an error, send the error to client
+  if(errors){
+    console.log('Validation error ' +errors);
+    res.json(errors);
+  }
+
+  //if there is no error, send success msg to client,
+  //hash the user pw, create a new user object and
+  //save it in the db
+  else{
+    console.log('No validation error');
+    res.json({message: 'success'});
+
+    //hash the user pw
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+
+    //generate a new User
+    const user = {
+      'name' : name,
+      'email' : email,
+      'password' : hash
+    };
+    
+    //send the user object to the database
+    db.users.save(user);
+  }
+});//<--- END REGISTRATION ROUTE
 
 //starting the server
 server.listen(PORT, () => {
