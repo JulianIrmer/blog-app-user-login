@@ -1,7 +1,8 @@
 {
   "name": "blog-app-nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Blog app with user login",
+  "repository": "https://github.com/JulianIrmer/blog-app-user-login.git",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -13,10 +14,18 @@
     "express": "^4.16.3",
     "nodemon": "^1.18.4",
     "cors": "^2.8.4",
-    "mongojs": "^2.6.0"
+    "mongojs": "^2.6.0",
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
   },
-  "devDependencies": {
-    "cors": "^2.8.4",
-    "mongojs": "^2.6.0"
-  }
+  "devDependencies": {}
 }

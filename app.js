@@ -1,6 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const mongojs = require('mongojs');
+
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const expressValidator = require('express-validator');
+const flash = require('flash');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
 const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb://Holly:ikou05667@ds123614.mlab.com:23614/hollydb'
 let seqID = 1;
@@ -10,10 +21,10 @@ const db = mongojs(DB_URL, ['posts']);
 
 db.on('connect', (err) => {
   if(err){
-    console.log('database error', err)
+    console.log('database error', err);
   }
   else{
-    console.log('database connected')
+    console.log('database connected');
   }
 });
 
@@ -23,10 +34,6 @@ const server = express();
 //middleware
 server.use(express.json());
 server.use(cors());
-
-// server.get('/', (req, res) => {
-//   res.json({message: 'Hello World'});
-// });
 
 //load html/css/js from public folder
 server.use(express.static("public"));
