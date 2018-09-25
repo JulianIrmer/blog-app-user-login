@@ -3,7 +3,6 @@ const cors = require('cors');
 const mongojs = require('mongojs');
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
-const flash = require('flash');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
