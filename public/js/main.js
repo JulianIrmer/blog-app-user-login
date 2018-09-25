@@ -228,6 +228,7 @@ function logout(){
 function editor(){
   document.querySelector('#title').classList.remove('hidden2');
   document.querySelector('#content').classList.remove('hidden2');
+  document.querySelector('.post-form').style.height = 200 +'px';
   send.style.transform = 'translateY(0px)';
   send.innerHTML = 'Send';
   
