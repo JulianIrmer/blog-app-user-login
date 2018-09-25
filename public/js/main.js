@@ -170,7 +170,7 @@ function loadAllPosts() {
 
         //add the 'delete a single post'-function
         delBtn.addEventListener('click', (delBtn) => {
-          let postid = delBtn.path[0].id
+          let postid = delBtn.path[0].id;
           fetch(API_DELETE_ID+postid, {
             method: 'POST',
             headers: {
@@ -178,7 +178,7 @@ function loadAllPosts() {
             }
           });
           //make sure the server has enough time to fetch the new data
-          setTimeout(loadAllPosts, 1000);
+          setTimeout(loadAllPosts, 500);
         });
 
         //add all new elements to the div and add the div to the posts-div

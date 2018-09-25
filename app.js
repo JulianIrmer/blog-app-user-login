@@ -9,8 +9,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const PORT = process.env.PORT || 5000;
-const DB_URL = 'mongodb://Holly:ikou05667@ds123614.mlab.com:23614/hollydb'
-let seqID = 1;
+const DB_URL = 'mongodb://Holly:ikou05667@ds123614.mlab.com:23614/hollydb';
+let seqID = 0;
+
 
 //connect to mongodb
 const db = mongojs(DB_URL, ['postsDev', 'users']);
@@ -23,6 +24,8 @@ db.on('connect', (err) => {
     console.log('database connected');
   }
 });
+
+
 
 //setting up the express server
 const server = express();
@@ -75,6 +78,21 @@ server.use((req, res, next) => {
 //load html/css/js from public folder
 server.use(express.static("public"));
 
+//get latest ID
+function getMaxID(){
+  db.postsDev.find().sort({id: -1}, function (err, docs) {
+    if(docs.length > 0){
+      maxID = docs[0].id;
+      
+      seqID = maxID;
+      console.log(docs[0].id);
+    }
+    else{
+      console.log('no data');
+    }
+  });
+}
+
 //get all posts
 server.get('/api', (req, res) => {
   db.postsDev.find((err, posts) => {
@@ -90,14 +108,15 @@ server.get('/api', (req, res) => {
       }
     }
   });
+  getMaxID();
 });
 
 //save a post
 server.post('/api/send', (req, res) => {
   let data = req.body;
+  seqID++;
   data.id = seqID;
   db.postsDev.save(data);
-  seqID++;
 });
 
 //delete all posts
@@ -145,7 +164,7 @@ server.post('/api/register', (req, res) => {
 
   //if there is no error, send success msg to client,
   //hash the user pw, create a new user object and
-  //save it in the db
+  //send it to the db
   else{
     res.json({message: 'success'});
 
