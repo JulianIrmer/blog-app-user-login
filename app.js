@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const mongojs = require('mongojs');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const expressValidator = require('express-validator');
-const session = require('express-session');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+// const session = require('express-session');
+// const passport = require('passport');
+// const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const PORT = process.env.PORT || 5000;
 const DB_URL = 'mongodb://Holly:ikou05667@ds123614.mlab.com:23614/hollydb';
@@ -32,18 +33,24 @@ const server = express();
 //middleware
 server.use(express.json());
 server.use(cors());
-server.use(cookieParser());
 
-//express session
-server.use(session({
-  secret: 'secret',
-  saveUninitialized: true,
-  resave: true
+//cookie session
+server.use(cookieSession({
+  name: 'Session',
+  keys: ['1', '2', '3', '4', '5'],
+  maxAge: 1000*60*60*48 //ms*s*m*h
 }));
 
+//express session
+// server.use(session({
+//   secret: 'secret',
+//   saveUninitialized: true,
+//   resave: true
+// }));
+
 //passport init
-server.use(passport.initialize());
-server.use(passport.session());
+// server.use(passport.initialize());
+// server.use(passport.session());
 
 //express validator
 server.use(expressValidator({
@@ -63,28 +70,23 @@ server.use(expressValidator({
   }
 }));
 
-// connect flash
-server.use(flash());
-
 // global variables
-server.use((req, res, next) => {
-  res.locals.success_msg = req.flash('success_msg');
-  res.locals.error_msg = req.flash('error_msg');
-  res.locals.error = req.flash('error');
-  next();
-});
+// server.use((req, res, next) => {
+//   res.locals.success_msg = req.flash('success_msg');
+//   res.locals.error_msg = req.flash('error_msg');
+//   res.locals.error = req.flash('error');
+//   next();
+// });
 
 //load html/css/js from public folder
 server.use(express.static("public"));
 
 //get latest ID
 function getMaxID(){
-  db.postsDev.find().sort({id: -1}, function (err, docs) {
+  db.postsDev.find().sort({id: -1}, (err, docs) => {
     if(docs.length > 0){
       maxID = docs[0].id;
-      
       seqID = maxID;
-      console.log(docs[0].id);
     }
     else{
       console.log('no data');
@@ -137,7 +139,26 @@ server.post('/api/delete/:id', (req, res) => {
 
 //login route
 server.post('/api/login', (req, res) => {
-  console.log(req.body);
+  db.users.findOne({name : req.body.username}, (err, user) => {
+    if(!user || err){
+      console.log('database error', err);
+    }
+    else if(user){
+      //check pw. oder is important!!
+      bcrypt.compare(req.body.password, user.password).then((response) => {
+        if(!response){
+          console.log('password wrong');
+        }
+        else{
+          console.log('logging in...');
+          res.json(user.name);
+          req.session.views = (req.session.views || 0) + 1;
+          res.end(req.session.views + ' views');
+          console.log(req.session.views);
+        }
+    });
+    }
+  });
 });
 
 //register route

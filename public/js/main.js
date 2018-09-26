@@ -68,10 +68,23 @@ loginForm.addEventListener('submit', (event) => {
     body: JSON.stringify(data),
     headers: {
       'content-type':'application/json'
+    },
+  })
+  .then((response) => {
+    return response.json();
+  })
+  .then((response) => {
+    if(response){
+      console.log('logging in');
+      loginForm.classList.toggle('hidden');
+      document.querySelector('.container1').classList.toggle('hidden');
+      center.style.zIndex = -3;
+      header.classList.toggle('blur');
+      wrapper.classList.toggle('blur');
+      document.querySelector('.login-li').innerHTML = 'Hello, '+response+'!';
+      document.querySelector('.login-li').onclick = '';
     }
   });
-  //reload the page
-  window.location.reload();
 });
 
 //getting register data
