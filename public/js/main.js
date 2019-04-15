@@ -10,30 +10,55 @@ const center2 = document.querySelector('.center2');
 const popup = document.querySelector('.popup');
 const send = document.querySelector('.send-btn');
 
-//API ROUTES
-const API_GET_ALL = '/api';
-const API_SEND = '/api/send';
-const API_DELETE_ALL = '/api/delete';
-const API_DELETE_ID = '/api/delete/';
-const API_LOGIN = '/api/login';
-const API_REGISTER = '/api/register';
+//GLOBAL VARIABLES
+let currentUser = '';
 
-//getting the submitted data from the post-form
+//API ROUTES
+const API_GET_ALL = 'http://localhost:5000/api';
+const API_SEND = 'http://localhost:5000/api/send';
+const API_DELETE_ALL = 'http://localhost:5000/api/delete';
+const API_DELETE_ID = 'http://localhost:5000/api/delete/';
+const API_LOGIN = 'http://localhost:5000/api/login';
+const API_REGISTER = 'http://localhost:5000/api/register';
+const API_CHECK_SESSION = 'http://localhost:5000/api/checksession';
+
+
+
+//get all posts from mongodb
+window.onload = () => {
+  loadAllPosts();
+}; 
+checkSession();
+
+function checkSession(){
+  fetch(API_CHECK_SESSION)
+    .then(response => {return response.json()})
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => console.log(err));
+};
+
+//create a post
 postForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const formData = new FormData(postForm);
-  const title = formData.get('title');
-  const content = formData.get('content');
+  // const formData = new FormData(postForm);
+  // const title = formData.get('title');
+  // const content = formData.get('content');
+  const title = document.querySelector('#title').value;
+  const content = document.querySelector('#content').value;
   const time = new Date().toLocaleTimeString();
   const date = new Date().toLocaleDateString();
+  const author = currentUser;
   let id;
-  
+
   const data = {
     title,
     content,
     id,
     time,
-    date
+    date,
+    author
   };
 
   //save a post to mongodb
@@ -44,25 +69,27 @@ postForm.addEventListener('submit', (event) => {
       'content-type':'application/json'
     }
   });
-  //reload the window and resetting the form 
+  //reload the window
   window.location.reload();
+  loadAllPosts();
+  document.querySelector('#title').value = '';
+  document.querySelector('#content').value = '';
 });
 
 //getting login data
 loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const loginData = new FormData(loginForm);
-  const username = loginData.get('username');
-  const password = loginData.get('password');
-  const time = new Date();
+  // const loginData = new FormData(loginForm);
+  // const username = loginData.get('username');
+  // const password = loginData.get('password');
+  const username = document.querySelector('#name-login').value;
+  const password = document.querySelector('#pw-login').value;
   
   const data = {
     username,
-    password,
-    time
+    password
   };
 
-  // save a post to mongodb
   fetch(API_LOGIN, {
     method: 'POST',
     body: JSON.stringify(data),
@@ -83,18 +110,22 @@ loginForm.addEventListener('submit', (event) => {
       wrapper.classList.toggle('blur');
       document.querySelector('.login-li').innerHTML = 'Hello, '+response+'!';
       document.querySelector('.login-li').onclick = '';
-    }
+    };
   });
 });
 
 //getting register data
 registerForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const registerData = new FormData(registerForm);
-  const username = registerData.get('username');
-  const email = registerData.get('email');
-  const password = registerData.get('password');
-  const password2 = registerData.get('password2');
+  // const registerData = new FormData(registerForm);
+  // const username = registerData.get('username');
+  // const email = registerData.get('email');
+  // const password = registerData.get('password');
+  // const password2 = registerData.get('password2');
+  const username = document.querySelector('#name-register').value; 
+  const email = document.querySelector('#email-register').value; 
+  const password = document.querySelector('#pw-register').value; 
+  const password2 = document.querySelector('#pw-register-conf').value; 
   const time = new Date();
   
   const data = {
@@ -117,16 +148,13 @@ registerForm.addEventListener('submit', (event) => {
       return response.json();
     })
     .then((response) => {
-      //If error, show error
       if(response.length > 0){
-        // alert(response[0].msg);
         popup.classList.toggle('hidden');
         popup.innerHTML = response[0].msg;
         setTimeout(() => {
           popup.classList.toggle('hidden');
         },1500);
       }
-      //if success, show success-msg and reload
       else{
         popup.classList.toggle('hidden');
         popup.innerHTML = response.message;
@@ -137,9 +165,6 @@ registerForm.addEventListener('submit', (event) => {
       }
     });
 });
-
-//get all posts from mongodb
-window.onload = loadAllPosts();
 
 //create new html elements for every element in the array
 function loadAllPosts() {
@@ -164,6 +189,11 @@ function loadAllPosts() {
         const content = document.createElement('p');
         content.textContent = post.content;
         content.className = 'post-content';
+
+        //add the author
+        const author = document.createElement('p');
+        author.textContent = post.author;
+        author.className = 'post-author';
 
         //add the time
         const time = document.createElement('small');
@@ -197,46 +227,47 @@ function loadAllPosts() {
         //add all new elements to the div and add the div to the posts-div
         div.appendChild(title);
         div.appendChild(content);
+        div.appendChild(author);
         div.appendChild(time);
         div.appendChild(date);
         div.appendChild(delBtn);
         postsElement.appendChild(div);
       });
   });
-}
+};
 
 function show(id){
   if(id == 1){
     document.querySelector('.container1').classList.toggle('hidden');
     loginForm.classList.toggle('hidden');
     center.style.zIndex = 3;
-  }
+  };
   if(id == 2){
     document.querySelector('.container2').classList.toggle('hidden');
     registerForm.classList.toggle('hidden');
     center2.style.zIndex = 3;
-  }
+  };
   header.classList.toggle('blur');
   wrapper.classList.toggle('blur');
-}
+};
 
 function hide(id){
   if(id == 'login-layer'){
     loginForm.classList.toggle('hidden');
     center.style.zIndex = -3;
-  }
+  };
   if(id == 'register-layer'){
     registerForm.classList.toggle('hidden');
     center2.style.zIndex = -3;
-  }
+  };
   document.getElementById(id).classList.toggle('hidden');
   header.classList.toggle('blur');
   wrapper.classList.toggle('blur');
-}
+};
 
 function logout(){
   console.log('byebye');
-}
+};
 
 function editor(){
   document.querySelector('#title').classList.remove('hidden2');
@@ -244,7 +275,6 @@ function editor(){
   document.querySelector('.post-form').style.height = 200 +'px';
   send.style.transform = 'translateY(0px)';
   send.innerHTML = 'Send';
-  
-}
+};
 
 
